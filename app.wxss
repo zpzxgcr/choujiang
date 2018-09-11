@@ -1,0 +1,47 @@
+/**app.wxss**/
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+button {
+  margin: 0; padding: 0;
+  border: none;
+  background-color: transparent;
+}
+button::before {
+  border: none;
+  background-color: transparent;
+}
+button::after {
+  border: none;
+  background-color: transparent;
+}
+button[type=default][plain] {
+  border: none;
+}
+button[plain] {
+  border: none;
+}  
+
+@keyframes rising {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes landing {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

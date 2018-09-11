@@ -1,0 +1,124 @@
+<!-- pages/lucky-draw/lucky-draw.wxml -->
+<ShowQR id="ShowQR" QR="{{QR}}"></ShowQR>
+<view class="luckyDraw">
+    <!-- S 头部设计 -->
+    <Header text="抽奖" color="white" getCurrentPages="{{getCurrentPages}}"></Header>
+    <view class="header">
+        <image class="bg" src="./../../assets/images/lukey_header_bg.png" />
+    </view>
+    <!-- E 头部设计 -->
+    <!-- S 页面背景 -->
+    <!-- E 页面背景 -->
+    <!-- S 主体内容 -->
+    <view class="main">
+        <view class="myPrize" bind:tap="showPrize">我的奖品</view>
+        <!-- S 走马灯 -->
+        <view class="lamp-box">
+            <image class="first" style="width: 100%; display: block;" src="./../../assets/images/lukey_bg_01.png" mode="widthFix" />
+            <view class="lamp">
+                <view class="top">
+                    <view class="content" wx:for="{{[1,2,3,4,5,6]}}" wx:key="{{index}}">
+                        <vie class="{{flashing?'white':'yellow'}}"></vie>
+                        <view class="{{flashing?'yellow':'white'}}"></view>
+                    </view>
+                </view>
+                <view class="right">
+                    <view class="content" wx:for="{{[1,2]}}" data-index="{{index}}" wx:key="{{index}}" style="transform: rotateZ({{index == 1?'':'-'}}15deg);">
+                        <view class="{{flashing?'yellow':'white'}}"></view>
+                        <vie class="{{flashing?'white':'yellow'}}"></vie>
+                    </view>
+                </view>
+                <view class="bottom">
+                    <view class="content" wx:for="{{[1,2,3,4,5,6]}}" wx:key="{{index}}">
+                        <view class="{{flashing?'yellow':'white'}}"></view>
+                        <vie class="{{flashing?'white':'yellow'}}"></vie>
+                    </view>
+                </view>
+                <view class="left">
+                    <view class="content" wx:for="{{[1,2]}}" data-index="{{index}}" wx:key="{{index}}" style="transform: rotateZ({{index == 1?'-':''}}15deg);">
+                        <view class="{{flashing?'yellow':'white'}}"></view>
+                        <vie class="{{flashing?'white':'yellow'}}"></vie>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- E 走马灯 -->
+        <!-- S 红包列表 -->
+        <view class="prizeContent-box">
+            <image class="second" style="width: 100%; display: block;" src="./../../assets/images/lukey_bg_02.png" mode="widthFix" />
+            <view class="prizeContent">
+                <view class="prizeList" wx:for="{{[1,2,3]}}" wx:key="{{index}}">
+                    <view class="prizeBox" style=" transform: rotateX({{animation0}}deg);  transition-duration:{{index==0?time0:index==1?time1:time2}}s">
+                        <view class="red-envelope" wx:for="{{index==0?redEnvelopeList0:index==1?redEnvelopeList1:redEnvelopeList2 }}" wx:for-index="i" wx:key="i" style="transform:rotateX({{(360/redEnvelopeList0.length)*(i) - 100}}deg)   translateZ({{250}}rpx);padding-top:{{item.text=='一'?6:item.text=='二'?8:item.text=='三'?  4:2}}rpx;width:{{item.text=='一'?180:item.text=='二'?220:item.text=='三'?    220:90}}rpx">
+                            <image src="./../../assets/images/red_envelope{{item.text=='一'?1:item.text=='二'?2:item.text=='三'? 3:''}}.png" mode="widthFix" />
+                            <text wx:if="{{item.text=='一'?false:item.text=='二'?false:item.text=='三'?  false:true}}">
+                                {{item.text}}等奖
+                            </text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <!-- E 红包列表 -->
+        <!-- S 按钮 -->
+        <view class="btn-box">
+            <image class="three" style="width: 100%; display: block;" src="./../../assets/images/lukey_bg_03.png" mode="widthFix" />
+            <button class="btn" type="default" bindtap='start' plain="{{true}}" hover-class="none">
+                <image src="./../../assets/images/btn.png" mode="widthFix" class="up" />
+                <image src="./../../assets/images/btn_press.png" mode="widthFix" class="press" />
+                <view class="text">
+                    <view class="left">
+                        <text class="chance">剩余机会</text>
+                        <text class="times">3</text>
+                    </view>
+                    <view class="right">
+                        <button type="default" plain="true" hover-class="none">分享继续玩</button>
+                    </view>
+                </view>
+            </button>
+        </view>
+        <!-- E 按钮 -->
+        <!-- S 获奖记录 -->
+        <view class="winning-record-box">
+            <image class="four" style="width: 100%; display: block;" src="./../../assets/images/lukey_bg_04.png" mode="widthFix" />
+            <view class="winning-record">
+                <view class="title">
+                    <text>--</text>
+                    <text>中奖纪录（已有5017336人中奖）</text>
+                    <text>--</text>
+                </view>
+                <swiper interval="1500" duration="1500" circular="true" vertical="true" previous-margin="15rpx" next-margin="15rpx" autoplay="true">
+                    <block wx:for="{{winInfo}}" wx:key="{{index}}">
+                        <swiper-item class="container">
+                            <view class="list">
+                                <view class="date">{{item.date}}</view>
+                                <view class="time">{{item.time}}</view>
+                                <view class="phone">{{item.phone}}</view>
+                                <view class="prize">获得{{item.prize}}！</view>
+                            </view>
+                        </swiper-item>
+                    </block>
+                </swiper>
+            </view>
+        </view>
+        <!-- E 获奖记录 -->
+    </view>
+    <!-- E 主体内容 -->
+    <view class="prize-list-box" wx:if="{{prizeShow}}">
+        <view class="shareBg" bind:tap="closePrize"></view>
+        <view class="bottom">
+            <view class="des-title">
+                <view class="left">我的奖品</view>
+                <view class="right" bind:tap="closePrize"></view>
+            </view>
+            <view class="content">
+                <block wx:for="{{prizeList}}" wx:key="{{index}}">
+                    <view class="item">
+                        <view class="left">购物卡</view>
+                        <view class="right" bind:tap="openQR">确认领取</view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</view>

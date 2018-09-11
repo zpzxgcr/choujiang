@@ -1,0 +1,9 @@
+{
+  "pages": [ 
+    "pages/lucky-draw/lucky-draw" 
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  }
+}
